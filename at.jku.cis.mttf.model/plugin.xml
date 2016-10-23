@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated at.jku.cis.mttf.model -->
+      <package
+            uri="at.jku.cis.mttf.model"
+            class="mttf.MttfPackage"
+            genModel="src/main/resources/at.jku.cis.mttf.model.genmodel"/>
+   </extension>
+
+</plugin>
