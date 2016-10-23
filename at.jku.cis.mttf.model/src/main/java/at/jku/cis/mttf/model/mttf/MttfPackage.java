@@ -1,6 +1,6 @@
 /**
  */
-package mttf;
+package at.jku.cis.mttf.model.mttf;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see mttf.MttfFactory
+ * @see at.jku.cis.mttf.model.mttf.MttfFactory
  * @model kind="package"
  * @generated
  */
@@ -52,14 +52,14 @@ public interface MttfPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	MttfPackage eINSTANCE = mttf.impl.MttfPackageImpl.init();
+	MttfPackage eINSTANCE = at.jku.cis.mttf.model.mttf.impl.MttfPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link mttf.impl.ModelImpl <em>Model</em>}' class.
+	 * The meta object id for the '{@link at.jku.cis.mttf.model.mttf.impl.ModelImpl <em>Model</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see mttf.impl.ModelImpl
-	 * @see mttf.impl.MttfPackageImpl#getModel()
+	 * @see at.jku.cis.mttf.model.mttf.impl.ModelImpl
+	 * @see at.jku.cis.mttf.model.mttf.impl.MttfPackageImpl#getModel()
 	 * @generated
 	 */
 	int MODEL = 0;
@@ -84,11 +84,11 @@ public interface MttfPackage extends EPackage {
 
 
 	/**
-	 * Returns the meta object for class '{@link mttf.Model <em>Model</em>}'.
+	 * Returns the meta object for class '{@link at.jku.cis.mttf.model.mttf.Model <em>Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Model</em>'.
-	 * @see mttf.Model
+	 * @see at.jku.cis.mttf.model.mttf.Model
 	 * @generated
 	 */
 	EClass getModel();
@@ -117,11 +117,11 @@ public interface MttfPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link mttf.impl.ModelImpl <em>Model</em>}' class.
+		 * The meta object literal for the '{@link at.jku.cis.mttf.model.mttf.impl.ModelImpl <em>Model</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see mttf.impl.ModelImpl
-		 * @see mttf.impl.MttfPackageImpl#getModel()
+		 * @see at.jku.cis.mttf.model.mttf.impl.ModelImpl
+		 * @see at.jku.cis.mttf.model.mttf.impl.MttfPackageImpl#getModel()
 		 * @generated
 		 */
 		EClass MODEL = eINSTANCE.getModel();

@@ -1,8 +1,8 @@
 /**
  */
-package mttf.util;
+package at.jku.cis.mttf.model.mttf.util;
 
-import mttf.*;
+import at.jku.cis.mttf.model.mttf.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see mttf.MttfPackage
+ * @see at.jku.cis.mttf.model.mttf.MttfPackage
  * @generated
  */
 public class MttfSwitch<T> extends Switch<T> {

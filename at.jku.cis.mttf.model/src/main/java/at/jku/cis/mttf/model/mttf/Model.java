@@ -1,6 +1,6 @@
 /**
  */
-package mttf;
+package at.jku.cis.mttf.model.mttf;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- end-user-doc -->
  *
  *
- * @see mttf.MttfPackage#getModel()
+ * @see at.jku.cis.mttf.model.mttf.MttfPackage#getModel()
  * @model
  * @generated
  */

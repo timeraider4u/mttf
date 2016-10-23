@@ -1,8 +1,8 @@
 /**
  */
-package mttf.impl;
+package at.jku.cis.mttf.model.mttf.impl;
 
-import mttf.*;
+import at.jku.cis.mttf.model.mttf.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;

@@ -1,10 +1,10 @@
 /**
  */
-package mttf.impl;
+package at.jku.cis.mttf.model.mttf.impl;
 
-import mttf.Model;
-import mttf.MttfFactory;
-import mttf.MttfPackage;
+import at.jku.cis.mttf.model.mttf.Model;
+import at.jku.cis.mttf.model.mttf.MttfFactory;
+import at.jku.cis.mttf.model.mttf.MttfPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -36,7 +36,7 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see mttf.MttfPackage#eNS_URI
+	 * @see at.jku.cis.mttf.model.mttf.MttfPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

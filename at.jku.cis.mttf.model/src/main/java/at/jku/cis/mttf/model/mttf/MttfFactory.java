@@ -1,6 +1,6 @@
 /**
  */
-package mttf;
+package at.jku.cis.mttf.model.mttf;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see mttf.MttfPackage
+ * @see at.jku.cis.mttf.model.mttf.MttfPackage
  * @generated
  */
 public interface MttfFactory extends EFactory {
@@ -19,7 +19,7 @@ public interface MttfFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	MttfFactory eINSTANCE = mttf.impl.MttfFactoryImpl.init();
+	MttfFactory eINSTANCE = at.jku.cis.mttf.model.mttf.impl.MttfFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Model</em>'.

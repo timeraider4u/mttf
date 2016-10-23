@@ -10,6 +10,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: mttf,
- mttf.impl,
- mttf.util
+Export-Package: at.jku.cis.mttf.model.mttf,
+ at.jku.cis.mttf.model.mttf.impl,
+ at.jku.cis.mttf.model.mttf.util

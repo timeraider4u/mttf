@@ -1,8 +1,8 @@
 /**
  */
-package mttf.util;
+package at.jku.cis.mttf.model.mttf.util;
 
-import mttf.*;
+import at.jku.cis.mttf.model.mttf.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see mttf.MttfPackage
+ * @see at.jku.cis.mttf.model.mttf.MttfPackage
  * @generated
  */
 public class MttfAdapterFactory extends AdapterFactoryImpl {
@@ -92,13 +92,13 @@ public class MttfAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link mttf.Model <em>Model</em>}'.
+	 * Creates a new adapter for an object of class '{@link at.jku.cis.mttf.model.mttf.Model <em>Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see mttf.Model
+	 * @see at.jku.cis.mttf.model.mttf.Model
 	 * @generated
 	 */
 	public Adapter createModelAdapter() {
