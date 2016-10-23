@@ -6,6 +6,7 @@ import at.jku.cis.mttf.model.mttf.Model;
 import at.jku.cis.mttf.model.mttf.MttfFactory;
 import at.jku.cis.mttf.model.mttf.MttfPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -100,6 +101,15 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getModel_Uri() {
+		return (EAttribute)modelEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MttfFactory getMttfFactory() {
 		return (MttfFactory)getEFactoryInstance();
 	}
@@ -124,6 +134,7 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 
 		// Create classes and their features
 		modelEClass = createEClass(MODEL);
+		createEAttribute(modelEClass, MODEL__URI);
 	}
 
 	/**
@@ -157,6 +168,7 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getModel_Uri(), ecorePackage.getEString(), "uri", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

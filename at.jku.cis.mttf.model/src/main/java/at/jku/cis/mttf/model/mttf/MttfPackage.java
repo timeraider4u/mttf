@@ -2,6 +2,7 @@
  */
 package at.jku.cis.mttf.model.mttf;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -65,13 +66,22 @@ public interface MttfPackage extends EPackage {
 	int MODEL = 0;
 
 	/**
+	 * The feature id for the '<em><b>Uri</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__URI = 0;
+
+	/**
 	 * The number of structural features of the '<em>Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_FEATURE_COUNT = 0;
+	int MODEL_FEATURE_COUNT = 1;
 
 	/**
 	 * The number of operations of the '<em>Model</em>' class.
@@ -92,6 +102,17 @@ public interface MttfPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getModel();
+
+	/**
+	 * Returns the meta object for the attribute '{@link at.jku.cis.mttf.model.mttf.Model#getUri <em>Uri</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Uri</em>'.
+	 * @see at.jku.cis.mttf.model.mttf.Model#getUri()
+	 * @see #getModel()
+	 * @generated
+	 */
+	EAttribute getModel_Uri();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -125,6 +146,13 @@ public interface MttfPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MODEL = eINSTANCE.getModel();
+		/**
+		 * The meta object literal for the '<em><b>Uri</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL__URI = eINSTANCE.getModel_Uri();
 
 	}
 
