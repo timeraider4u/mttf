@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<project name="myproject" default="codegen">
+	<target name="codegen">
+		<delete dir="src/main/java/"/>
+		<emf.Ecore2Java
+			model="src/main/resources/at.jku.cis.mttf.model.ecore"
+			genModel="src/main/resources/at.jku.cis.mttf.model.genmodel"
+			modelProject="at.jku.cis.mttf.model"
+			modelpluginid=""
+            modelProjectFragmentPath="src/main/java"
+			generateeditorproject="false"
+			generateeditproject="false"
+			generatejavacode="true"
+			generatemodelproject="true"
+			generatetestsproject="false"
+			reconcileGenModel="keep"
+			validateModel="true">
+        	<arg line="-package at.jku.cis.mttf.model"/>
+		</emf.Ecore2Java>
+	</target>
+</project>
