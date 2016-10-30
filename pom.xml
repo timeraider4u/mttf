@@ -40,10 +40,10 @@
 		<!-- github server corresponds to entry in ~/.m2/settings.xml -->
 		<github.global.server>github</github.global.server>
 		<!-- Eclipse Tycho building -->
-		<tycho.version>0.24.0</tycho.version>
+		<tycho.version>0.26.0</tycho.version>
 		<eclipse.name>neon</eclipse.name>
+		<mwe2.version>2.9.0.201605261059</mwe2.version>
 	</properties>
-	
 	
 	<repositories>
 		<repository>
@@ -114,6 +114,11 @@
 	-->
 	
 	<build>
+		<pluginManagement>
+			<plugins>
+				
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<!-- We build this project using Tycho: -->
 			<plugin>
