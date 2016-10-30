@@ -20,8 +20,8 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Model extends EObject {
-
+public interface Model extends EObject
+{
 	/**
 	 * Returns the value of the '<em><b>Uri</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -47,4 +47,5 @@ public interface Model extends EObject {
 	 * @generated
 	 */
 	void setUri(String value);
+
 } // Model

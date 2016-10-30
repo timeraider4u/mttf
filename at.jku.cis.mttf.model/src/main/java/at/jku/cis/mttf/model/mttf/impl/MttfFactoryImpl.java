@@ -18,21 +18,26 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class MttfFactoryImpl extends EFactoryImpl implements MttfFactory {
+public class MttfFactoryImpl extends EFactoryImpl implements MttfFactory
+{
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static MttfFactory init() {
-		try {
+	public static MttfFactory init()
+	{
+		try
+		{
 			MttfFactory theMttfFactory = (MttfFactory)EPackage.Registry.INSTANCE.getEFactory(MttfPackage.eNS_URI);
-			if (theMttfFactory != null) {
+			if (theMttfFactory != null)
+			{
 				return theMttfFactory;
 			}
 		}
-		catch (Exception exception) {
+		catch (Exception exception)
+		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new MttfFactoryImpl();
@@ -44,7 +49,8 @@ public class MttfFactoryImpl extends EFactoryImpl implements MttfFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MttfFactoryImpl() {
+	public MttfFactoryImpl()
+	{
 		super();
 	}
 
@@ -54,8 +60,10 @@ public class MttfFactoryImpl extends EFactoryImpl implements MttfFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
+	public EObject create(EClass eClass)
+	{
+		switch (eClass.getClassifierID())
+		{
 			case MttfPackage.MODEL: return createModel();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -67,7 +75,8 @@ public class MttfFactoryImpl extends EFactoryImpl implements MttfFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Model createModel() {
+	public Model createModel()
+	{
 		ModelImpl model = new ModelImpl();
 		return model;
 	}
@@ -77,7 +86,8 @@ public class MttfFactoryImpl extends EFactoryImpl implements MttfFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MttfPackage getMttfPackage() {
+	public MttfPackage getMttfPackage()
+	{
 		return (MttfPackage)getEPackage();
 	}
 
@@ -88,7 +98,8 @@ public class MttfFactoryImpl extends EFactoryImpl implements MttfFactory {
 	 * @generated
 	 */
 	@Deprecated
-	public static MttfPackage getPackage() {
+	public static MttfPackage getPackage()
+	{
 		return MttfPackage.eINSTANCE;
 	}
 

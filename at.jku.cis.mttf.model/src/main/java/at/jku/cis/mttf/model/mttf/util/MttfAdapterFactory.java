@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  * @see at.jku.cis.mttf.model.mttf.MttfPackage
  * @generated
  */
-public class MttfAdapterFactory extends AdapterFactoryImpl {
+public class MttfAdapterFactory extends AdapterFactoryImpl
+{
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -34,8 +35,10 @@ public class MttfAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MttfAdapterFactory() {
-		if (modelPackage == null) {
+	public MttfAdapterFactory()
+	{
+		if (modelPackage == null)
+		{
 			modelPackage = MttfPackage.eINSTANCE;
 		}
 	}
@@ -49,11 +52,14 @@ public class MttfAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage) {
+	public boolean isFactoryForType(Object object)
+	{
+		if (object == modelPackage)
+		{
 			return true;
 		}
-		if (object instanceof EObject) {
+		if (object instanceof EObject)
+		{
 			return ((EObject)object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -66,13 +72,16 @@ public class MttfAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	protected MttfSwitch<Adapter> modelSwitch =
-		new MttfSwitch<Adapter>() {
+		new MttfSwitch<Adapter>()
+		{
 			@Override
-			public Adapter caseModel(Model object) {
+			public Adapter caseModel(Model object)
+			{
 				return createModelAdapter();
 			}
 			@Override
-			public Adapter defaultCase(EObject object) {
+			public Adapter defaultCase(EObject object)
+			{
 				return createEObjectAdapter();
 			}
 		};
@@ -86,7 +95,8 @@ public class MttfAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target) {
+	public Adapter createAdapter(Notifier target)
+	{
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
@@ -101,7 +111,8 @@ public class MttfAdapterFactory extends AdapterFactoryImpl {
 	 * @see at.jku.cis.mttf.model.mttf.Model
 	 * @generated
 	 */
-	public Adapter createModelAdapter() {
+	public Adapter createModelAdapter()
+	{
 		return null;
 	}
 
@@ -113,7 +124,8 @@ public class MttfAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter() {
+	public Adapter createEObjectAdapter()
+	{
 		return null;
 	}
 

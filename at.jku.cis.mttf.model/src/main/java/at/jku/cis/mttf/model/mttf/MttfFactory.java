@@ -12,7 +12,8 @@ import org.eclipse.emf.ecore.EFactory;
  * @see at.jku.cis.mttf.model.mttf.MttfPackage
  * @generated
  */
-public interface MttfFactory extends EFactory {
+public interface MttfFactory extends EFactory
+{
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

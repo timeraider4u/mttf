@@ -18,7 +18,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
+public class MttfPackageImpl extends EPackageImpl implements MttfPackage
+{
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -41,7 +42,8 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * @see #init()
 	 * @generated
 	 */
-	private MttfPackageImpl() {
+	private MttfPackageImpl()
+	{
 		super(eNS_URI, MttfFactory.eINSTANCE);
 	}
 
@@ -64,7 +66,8 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static MttfPackage init() {
+	public static MttfPackage init()
+	{
 		if (isInited) return (MttfPackage)EPackage.Registry.INSTANCE.getEPackage(MttfPackage.eNS_URI);
 
 		// Obtain or create and register package
@@ -92,7 +95,8 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getModel() {
+	public EClass getModel()
+	{
 		return modelEClass;
 	}
 
@@ -101,7 +105,8 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getModel_Uri() {
+	public EAttribute getModel_Uri()
+	{
 		return (EAttribute)modelEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -110,7 +115,8 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MttfFactory getMttfFactory() {
+	public MttfFactory getMttfFactory()
+	{
 		return (MttfFactory)getEFactoryInstance();
 	}
 
@@ -128,7 +134,8 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void createPackageContents() {
+	public void createPackageContents()
+	{
 		if (isCreated) return;
 		isCreated = true;
 
@@ -151,7 +158,8 @@ public class MttfPackageImpl extends EPackageImpl implements MttfPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void initializePackageContents() {
+	public void initializePackageContents()
+	{
 		if (isInitialized) return;
 		isInitialized = true;
 

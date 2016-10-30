@@ -22,7 +22,8 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see at.jku.cis.mttf.model.mttf.MttfPackage
  * @generated
  */
-public class MttfSwitch<T> extends Switch<T> {
+public class MttfSwitch<T> extends Switch<T>
+{
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -37,8 +38,10 @@ public class MttfSwitch<T> extends Switch<T> {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MttfSwitch() {
-		if (modelPackage == null) {
+	public MttfSwitch()
+	{
+		if (modelPackage == null)
+		{
 			modelPackage = MttfPackage.eINSTANCE;
 		}
 	}
@@ -52,7 +55,8 @@ public class MttfSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage) {
+	protected boolean isSwitchFor(EPackage ePackage)
+	{
 		return ePackage == modelPackage;
 	}
 
@@ -64,9 +68,12 @@ public class MttfSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID) {
-			case MttfPackage.MODEL: {
+	protected T doSwitch(int classifierID, EObject theEObject)
+	{
+		switch (classifierID)
+		{
+			case MttfPackage.MODEL:
+			{
 				Model model = (Model)theEObject;
 				T result = caseModel(model);
 				if (result == null) result = defaultCase(theEObject);
@@ -87,7 +94,8 @@ public class MttfSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseModel(Model object) {
+	public T caseModel(Model object)
+	{
 		return null;
 	}
 
@@ -103,7 +111,8 @@ public class MttfSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object) {
+	public T defaultCase(EObject object)
+	{
 		return null;
 	}
 

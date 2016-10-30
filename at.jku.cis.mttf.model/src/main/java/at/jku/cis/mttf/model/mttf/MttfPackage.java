@@ -22,7 +22,8 @@ import org.eclipse.emf.ecore.EPackage;
  * @model kind="package"
  * @generated
  */
-public interface MttfPackage extends EPackage {
+public interface MttfPackage extends EPackage
+{
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -136,7 +137,8 @@ public interface MttfPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	interface Literals {
+	interface Literals
+	{
 		/**
 		 * The meta object literal for the '{@link at.jku.cis.mttf.model.mttf.impl.ModelImpl <em>Model</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -146,6 +148,7 @@ public interface MttfPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MODEL = eINSTANCE.getModel();
+
 		/**
 		 * The meta object literal for the '<em><b>Uri</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
