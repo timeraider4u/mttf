@@ -11,6 +11,7 @@
 	
 	<modules>
 		<module>at.jku.cis.mttf.model</module>
+		<module>at.jku.cis.mttf.model.tests</module>
 	</modules>
 	
 	<licenses>
@@ -40,6 +41,7 @@
 		<!-- github server corresponds to entry in ~/.m2/settings.xml -->
 		<github.global.server>github</github.global.server>
 		<!-- Eclipse Tycho building -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.version>0.26.0</tycho.version>
 		<eclipse.name>neon</eclipse.name>
 		<mwe2.version>2.9.0.201605261059</mwe2.version>
@@ -60,63 +62,58 @@
 				<updatePolicy>daily</updatePolicy>
 			</releases>
 		</repository>
-			<!--
-
-		<repository>
-			<id>EclipseEMF</id>
-			<name>Eclipse EMF Releases</name>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/modeling/emf/updates/releases/</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-			</releases>
-		</repository>
-		<repository>
-			<id>EclipseEMFMilestones</id>
-			<name>Eclipse EMF Milestones</name>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/modeling/emf/updates/milestones/</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-			</releases>
-		</repository>
-			-->
 	</repositories>
-	
-	
-	<!--
-	<pluginRepositories>
-	<pluginRepository>
-			<id>OSSSonatype</id>
-			<name>OSS Sonatype</name>
-			<layout>default</layout>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
-	-->
 	
 	<build>
 		<pluginManagement>
 			<plugins>
-				
+				<!-- run tycho test -->
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-surefire-plugin</artifactId>
+					<version>${tycho.version}</version>
+					<executions>
+						<execution>
+							<id>default-test</id>
+							<phase>none</phase>
+						</execution>
+						<execution>
+							<id>run-eclipse-unit-tests</id>
+							<goals>
+								<goal>test</goal>
+							</goals>
+							<configuration>
+								<failIfNoTests>true</failIfNoTests>
+								<includes>
+									<include>**/Test*.java</include>
+									<include>**/*Test*.java</include>
+									<include>**/*TestCase.java</include>
+								</includes>
+								<skip>${skip-tests-normal}</skip>
+								<skipTests>${skip-tests-normal}</skipTests>
+								<useUIHarness>false</useUIHarness>
+							</configuration>
+						</execution>
+						<execution>
+							<id>run-eclipse-gui-unit-tests</id>
+							<goals>
+								<goal>test</goal>
+							</goals>
+							
+							<configuration>
+								<failIfNoTests>false</failIfNoTests>
+								<includes>
+									<include>**/Test*.java</include>
+									<include>**/*Test*.java</include>
+									<include>**/*TestCase.java</include>
+								</includes>
+								<skip>${skip-gui-tests}</skip>
+								<skipTests>${skip-gui-tests}</skipTests>
+								<useUIHarness>true</useUIHarness>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
