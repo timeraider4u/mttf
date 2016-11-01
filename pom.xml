@@ -10,6 +10,7 @@
 	<packaging>pom</packaging>
 	
 	<modules>
+		<module>at.jku.cis.mttf.base</module>
 		<module>at.jku.cis.mttf.model</module>
 		<module>at.jku.cis.mttf.model.tests</module>
 	</modules>
