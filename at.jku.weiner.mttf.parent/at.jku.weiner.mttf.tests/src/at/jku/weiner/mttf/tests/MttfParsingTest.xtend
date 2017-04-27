@@ -12,6 +12,9 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
+import at.jku.weiner.mttf.validation.MttfValidator
+import at.jku.weiner.mttf.mttf.MttfPackage
+import org.junit.Ignore
 
 @RunWith(XtextRunner)
 @InjectWith(MttfInjectorProvider)
@@ -26,8 +29,8 @@ class MttfParsingTest{
 	def void testSimpleTestSuite() {
 		val result = parseHelper.parse('''
 			test-suite
-				source-metamodel="workspace:/Test/Class.ecore"
-				target-metamodel="workspace:/Test/Relational.ecore"
+				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
+				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
 				transformation="workspace:/Test/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
@@ -37,10 +40,10 @@ class MttfParsingTest{
 		Assert.assertNotNull(sut)
 		val sourceMM = sut.sourceMetaModel
 		Assert.assertNotNull(sourceMM)
-		Assert.assertEquals("workspace:/Test/Class.ecore", sourceMM.uri);
+		Assert.assertEquals("platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi", sourceMM.uri);
 		val targetMM = sut.targetMetaModel
 		Assert.assertNotNull(targetMM)
-		Assert.assertEquals("workspace:/Test/Relational.ecore", targetMM.uri);
+		Assert.assertEquals("platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi", targetMM.uri);
 		val trafo = sut.transformationUnderTest
 		Assert.assertNotNull(trafo)
 		Assert.assertEquals("workspace:/Test/Class2Relational.atl", trafo.uri);
@@ -48,17 +51,63 @@ class MttfParsingTest{
 		Assert.assertTrue(result.testCases.isEmpty())
 	}
 	
-	@Test 
+	@Test
+	@Ignore
 	def void testSimpleTestSuiteWithName() {
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
-				source-metamodel="workspace:/Test/Class.ecore"
-				target-metamodel="workspace:/Test/Relational.ecore"
+				source-metamodel="platform:/resource/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
+				target-metamodel="platform:/resource/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
 				transformation="workspace:/Test/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
 		validationHelper.assertNoErrors(result)
 		Assert.assertEquals("Class2Relational_TestSuite", result.name)
+	}
+	
+	@Test
+	@Ignore
+	def void testSimpleTestSuiteWithEmptySourceMM() {
+		val result = parseHelper.parse('''
+			test-suite name=Class2Relational_TestSuite
+				source-metamodel=""
+				target-metamodel="workspace:/Test/Relational.ecore"
+				transformation="workspace:/Test/Class2Relational.atl"
+		''')
+		Assert.assertNotNull(result)
+		validationHelper.assertError(result, MttfPackage::eINSTANCE.sourceMetaModel, 
+			MttfValidator.SOURCE_MM_IS_EMPTY, MttfValidator.MSG_SOURCE_MM_IS_EMTPY
+		);
+	}
+	
+	@Test
+	@Ignore
+	def void testSimpleTestSuiteWithEmptyTargetMM() {
+		val result = parseHelper.parse('''
+			test-suite name=Class2Relational_TestSuite
+				source-metamodel="platform:/resource/Test/Class.ecore"
+				target-metamodel=""
+				transformation="workspace:/Test/Class2Relational.atl"
+		''')
+		Assert.assertNotNull(result)
+		validationHelper.assertError(result, MttfPackage::eINSTANCE.targetMetaModel, 
+			MttfValidator.TARGET_MM_IS_EMPTY, MttfValidator.MSG_TARGET_MM_IS_EMTPY
+		);
+	}
+	
+	@Test
+	@Ignore
+	def void testSimpleTestSuiteWithEmptyTrafo() {
+		val result = parseHelper.parse('''
+			test-suite name=Class2Relational_TestSuite
+				source-metamodel="workspace:/Test/Class.ecore"
+				target-metamodel="workspace:/Test/Relational.ecore"
+				transformation=""
+		''')
+		Assert.assertNotNull(result)
+		validationHelper.assertError(result, MttfPackage::eINSTANCE.transformationUnderTest, 
+			MttfValidator.TRAFO_IS_EMPTY, MttfValidator.MSG_TRAFO_IS_EMTPY
+		);
 	}
 
 }

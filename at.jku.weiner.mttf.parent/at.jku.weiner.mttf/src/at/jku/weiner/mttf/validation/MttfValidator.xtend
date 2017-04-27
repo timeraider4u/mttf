@@ -3,6 +3,16 @@
  */
 package at.jku.weiner.mttf.validation
 
+import at.jku.weiner.mttf.mttf.MttfPackage
+import at.jku.weiner.mttf.mttf.SourceMetaModel
+import at.jku.weiner.mttf.mttf.TransformationUnderTest
+import at.jku.weiner.mttf.mttf.TargetMetaModel
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.xtext.validation.Check
+import java.util.HashMap
+import java.io.IOException
+import at.jku.weiner.mttf.utils.ResourceSetUtils
 
 /**
  * This class contains custom validation rules. 
@@ -11,15 +21,69 @@ package at.jku.weiner.mttf.validation
  */
 class MttfValidator extends AbstractMttfValidator {
 	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					MttfPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+	public static val SOURCE_MM_IS_EMPTY = 'sourceMetamodelIsEmpty';
+	public static val MSG_SOURCE_MM_IS_EMTPY = 'Source metamodel uri is empty!'
+	public static val SOURCE_MM_IS_INVALID = 'sourceMetamodelIsInvalid';
+	public static val MSG_SOURCE_MM_IS_INVALID = 'Source metamodel uri is invalid'
+	public static val TARGET_MM_IS_EMPTY = 'targetMetamodelIsEmpty';
+	public static val MSG_TARGET_MM_IS_EMTPY = 'target metamodel uri is empty!'
+	public static val TRAFO_IS_EMPTY = 'transformationIsEmpty';
+	public static val MSG_TRAFO_IS_EMTPY = 'Transformation (under test) uri is empty!'
+	
+	def checkNotEmpty(String uriAsString, String id, EStructuralFeature feature, String msg) {
+		if ((uriAsString == null) || (uriAsString.isEmpty())) {
+			error(msg, feature, id);
+		}
+	}
+	
+	def checkValidFile(String uriAsString, String id, EStructuralFeature feature, String msg) {
+		val uri = URI.createURI(uriAsString);
+		val resourceSet = ResourceSetUtils.getResourceSetForURI(uri);
+		val resource = resourceSet.getResource(uri, true);
+		try {
+			val options = new HashMap<Object, Object>();
+			resource.load(options)
+		}
+		catch (IOException ex) {
+			val errorMsg = msg + "'" + uriAsString + "' ('" + ex.getMessage() + "')!";
+			error(errorMsg, feature, id);
+		}
+	}
+	
+	@Check
+	def checkSourceMetamodelIsAValidFile(SourceMetaModel sourceMetaModel) {
+		val uriAsString = sourceMetaModel.uri;
+		checkNotEmpty(uriAsString,
+			SOURCE_MM_IS_EMPTY, 
+			MttfPackage.Literals.SOURCE_META_MODEL__URI, 
+			MSG_SOURCE_MM_IS_EMTPY
+		);
+		checkValidFile(uriAsString,
+			SOURCE_MM_IS_INVALID,
+			MttfPackage.Literals.SOURCE_META_MODEL__URI, 
+			MSG_SOURCE_MM_IS_INVALID
+		)
+	}
+	
+	@Check
+	def checkTargetMetamodelIsAValidFile(TargetMetaModel targetMetaModel) {
+		val uriAsString = targetMetaModel.uri;
+		checkNotEmpty(uriAsString,
+			TARGET_MM_IS_EMPTY, 
+			MttfPackage.Literals.TARGET_META_MODEL__URI, 
+			MSG_TARGET_MM_IS_EMTPY
+		);
+	}
+	
+	@Check
+	def checkTransformationIsAValidFile(TransformationUnderTest transformation) {
+		val uriAsString = transformation.uri;
+		checkNotEmpty(uriAsString,
+			TRAFO_IS_EMPTY, 
+			MttfPackage.Literals.TRANSFORMATION_UNDER_TEST__URI, 
+			MSG_TRAFO_IS_EMTPY
+		);
+		
+	}
 	
 }
