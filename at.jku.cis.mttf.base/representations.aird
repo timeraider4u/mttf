@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xmi:id="_u65IoKCDEeaS1b25_pCAMQ" version="11.0.1.201608181000">
-  <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
-  <semanticResources>src/main/resources/at.jku.cis.mttf.base.mwe2</semanticResources>
-  <semanticResources>src/main/resources/at.jku.cis.mttf.base.ecore</semanticResources>
-  <semanticResources>src/main/resources/at.jku.cis.mttf.base.genmodel</semanticResources>
-</viewpoint:DAnalysis>

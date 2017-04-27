@@ -1,0 +1,43 @@
+grammar at.jku.weiner.mttf.Mttf with org.eclipse.xtext.common.Terminals
+
+generate mttf "http://www.jku.at/weiner/mttf/Mttf"
+
+TestSuite: TEST_SUITE
+	(NAME ASSIGN name=ID)?
+	sut=SystemUnderTest
+	testCases+=TestCase*
+;
+
+SystemUnderTest:
+	sourceMetaModel=SourceMetaModel
+	targetMetaModel=TargetMetaModel
+	transformationUnderTest=TransformationUnderTest
+;
+
+SourceMetaModel:
+	SOURCE_MM ASSIGN uri=STRING
+;
+
+TargetMetaModel:
+	TARGET_MM ASSIGN uri=STRING
+;
+
+TransformationUnderTest:
+	TRAFO ASSIGN uri=STRING
+;
+
+TestCase:
+	TEST_CASE NAME ASSIGN name=ID
+	SOURCE ASSIGN source=STRING
+	ORACLE ASSIGN oracle=STRING
+;
+
+terminal TEST_SUITE:	'test-suite';
+terminal SOURCE_MM:		'source-metamodel';
+terminal TARGET_MM:		'target-metamodel';
+terminal TRAFO:			'transformation';
+terminal TEST_CASE:		'test-case';
+terminal NAME:			'name';
+terminal SOURCE:		'source';
+terminal ORACLE:		'oracle';
+terminal ASSIGN:		'=';

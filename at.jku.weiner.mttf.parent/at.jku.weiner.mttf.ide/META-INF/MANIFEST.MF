@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: at.jku.weiner.mttf.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: at.jku.weiner.mttf.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: at.jku.weiner.mttf,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: at.jku.weiner.mttf.ide.contentassist.antlr.internal,
+ at.jku.weiner.mttf.ide.contentassist.antlr
+
