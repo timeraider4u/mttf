@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package 
+			uri = "http://www.jku.at/weiner/mttf/Mttf"
+			class = "at.jku.weiner.mttf.mttf.MttfPackage"
+			genModel = "model/generated/Mttf.genmodel" />
+	</extension>
+</plugin>
