@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+	<feature id="at.jku.weiner.mttf.feature" version="0.0.0">
+		<category name="main"/>
+	</feature>
+	<feature id="at.jku.weiner.mttf.feature.source" version="0.0.0">
+		<category name="main.source"/>
+	</feature>
+	<category-def name="main" label="Mttf"/>
+	<category-def name="main.source" label="Mttf (Sources)"/>
+</site>

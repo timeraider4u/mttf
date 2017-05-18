@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="at.jku.weiner.mttf.feature"
+	label="Mttf Feature "
+	version="1.0.0.qualifier">
+	<plugin
+			id="at.jku.weiner.mttf"
+			download-size="0"
+			install-size="0"
+			version="0.0.0"
+			unpack="false"/>
+	<plugin
+			id="at.jku.weiner.mttf.ide"
+			download-size="0"
+			install-size="0"
+			version="0.0.0"
+			unpack="false"/>
+	<plugin
+			id="at.jku.weiner.mttf.ui"
+			download-size="0"
+			install-size="0"
+			version="0.0.0"
+			unpack="false"/>
+</feature>
