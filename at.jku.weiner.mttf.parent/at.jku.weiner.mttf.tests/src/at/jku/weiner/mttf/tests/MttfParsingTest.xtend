@@ -14,7 +14,6 @@ import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import at.jku.weiner.mttf.validation.MttfValidator
 import at.jku.weiner.mttf.mttf.MttfPackage
-import org.junit.Ignore
 
 @RunWith(XtextRunner)
 @InjectWith(MttfInjectorProvider)
@@ -52,12 +51,11 @@ class MttfParsingTest{
 	}
 	
 	@Test
-	@Ignore
 	def void testSimpleTestSuiteWithName() {
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
-				source-metamodel="platform:/resource/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
-				target-metamodel="platform:/resource/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
+				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
+				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
 				transformation="workspace:/Test/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
@@ -66,12 +64,11 @@ class MttfParsingTest{
 	}
 	
 	@Test
-	@Ignore
 	def void testSimpleTestSuiteWithEmptySourceMM() {
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
 				source-metamodel=""
-				target-metamodel="workspace:/Test/Relational.ecore"
+				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.ecore"
 				transformation="workspace:/Test/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
@@ -81,11 +78,10 @@ class MttfParsingTest{
 	}
 	
 	@Test
-	@Ignore
 	def void testSimpleTestSuiteWithEmptyTargetMM() {
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
-				source-metamodel="platform:/resource/Test/Class.ecore"
+				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.ecore"
 				target-metamodel=""
 				transformation="workspace:/Test/Class2Relational.atl"
 		''')
@@ -96,12 +92,11 @@ class MttfParsingTest{
 	}
 	
 	@Test
-	@Ignore
 	def void testSimpleTestSuiteWithEmptyTrafo() {
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
-				source-metamodel="workspace:/Test/Class.ecore"
-				target-metamodel="workspace:/Test/Relational.ecore"
+				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.ecore"
+				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.ecore"
 				transformation=""
 		''')
 		Assert.assertNotNull(result)

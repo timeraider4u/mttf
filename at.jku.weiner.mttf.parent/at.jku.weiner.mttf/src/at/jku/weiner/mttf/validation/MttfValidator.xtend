@@ -38,7 +38,7 @@ class MttfValidator extends AbstractMttfValidator {
 	
 	def checkValidFile(String uriAsString, String id, EStructuralFeature feature, String msg) {
 		val uri = URI.createURI(uriAsString);
-		val resourceSet = ResourceSetUtils.getResourceSetForURI(uri);
+		val resourceSet = ResourceSetUtils.getInstance().getResourceSetForURI(uri);
 		val resource = resourceSet.getResource(uri, true);
 		try {
 			val options = new HashMap<Object, Object>();

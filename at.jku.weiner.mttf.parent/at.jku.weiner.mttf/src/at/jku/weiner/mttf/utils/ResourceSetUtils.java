@@ -6,14 +6,43 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.xtext.resource.XtextResourceSet;
 
-public class ResourceSetUtils {
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 
-	public static ResourceSet getResourceSetForURI(final URI uri) {
-		return new ResourceSetImpl();
+/***
+ * Trying to centralize code for loading resources from a ResourceSet.
+ * <br/> <br/>
+ * Singleton object
+ * @author Harald Weiner
+ *
+ */
+public final class ResourceSetUtils {
+	
+	private static ResourceSetUtils instance = null;
+	
+	private ResourceSetUtils() {
+		
 	}
 	
-	public static Map<Object, Object> getLoadOptionsForURI(final URI uri) {
+	public static ResourceSetUtils getInstance() {
+		if (instance == null) {
+			instance = new ResourceSetUtils();
+		}
+		return instance;
+	}
+	
+	@Inject
+	private Provider<XtextResourceSet> resourceSetProvider;
+
+	public ResourceSet getResourceSetForURI(final URI uri) {
+		// return new ResourceSetImpl();
+		final XtextResourceSet result = resourceSetProvider.get();
+		return result;
+	}
+	
+	public Map<Object, Object> getLoadOptionsForURI(final URI uri) {
 		return new HashMap<Object, Object>();
 	}
 	

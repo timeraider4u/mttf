@@ -10,6 +10,7 @@ package at.jku.weiner.mttf
 class MttfStandaloneSetup extends MttfStandaloneSetupGenerated {
 
 	def static void doSetup() {
+		// new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
 		new MttfStandaloneSetup().createInjectorAndDoEMFRegistration()
 	}
 }
