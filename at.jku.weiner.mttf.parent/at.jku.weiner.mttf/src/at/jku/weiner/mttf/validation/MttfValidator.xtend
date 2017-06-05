@@ -13,6 +13,7 @@ import org.eclipse.xtext.validation.Check
 import java.util.HashMap
 import java.io.IOException
 import at.jku.weiner.mttf.utils.ResourceSetUtils
+import at.jku.weiner.mttf.extensionpoints.TransformationRegistry
 
 /**
  * This class contains custom validation rules. 
@@ -27,16 +28,23 @@ class MttfValidator extends AbstractMttfValidator {
 	public static val MSG_SOURCE_MM_IS_INVALID = 'Source metamodel uri is invalid'
 	public static val TARGET_MM_IS_EMPTY = 'targetMetamodelIsEmpty';
 	public static val MSG_TARGET_MM_IS_EMTPY = 'target metamodel uri is empty!'
+	public static val TARGET_MM_IS_INVALID = 'targetMetamodelIsInvalid';
+	public static val MSG_TARGET_MM_IS_INVALID = 'Target metamodel uri is invalid'
 	public static val TRAFO_IS_EMPTY = 'transformationIsEmpty';
 	public static val MSG_TRAFO_IS_EMTPY = 'Transformation (under test) uri is empty!'
+	public static val TRAFO_IS_INVALID = 'transformationIsInvalid';
+	public static val MSG_TRAFO_IS_INVALID = 'Transformation (under test) uri is not a valid transformation!'
+	
 	
 	def checkNotEmpty(String uriAsString, String id, EStructuralFeature feature, String msg) {
 		if ((uriAsString == null) || (uriAsString.isEmpty())) {
 			error(msg, feature, id);
+			return false;
 		}
+		return true;
 	}
 	
-	def checkValidFile(String uriAsString, String id, EStructuralFeature feature, String msg) {
+	def checkValidMetamodel(String uriAsString, String id, EStructuralFeature feature, String msg) {
 		val uri = URI.createURI(uriAsString);
 		val resourceSet = ResourceSetUtils.getInstance().getResourceSetForURI(uri);
 		val resource = resourceSet.getResource(uri, true);
@@ -47,18 +55,22 @@ class MttfValidator extends AbstractMttfValidator {
 		catch (IOException ex) {
 			val errorMsg = msg + "'" + uriAsString + "' ('" + ex.getMessage() + "')!";
 			error(errorMsg, feature, id);
+			return false;
 		}
+		return true;
 	}
 	
 	@Check
 	def checkSourceMetamodelIsAValidFile(SourceMetaModel sourceMetaModel) {
 		val uriAsString = sourceMetaModel.uri;
-		checkNotEmpty(uriAsString,
+		if (!checkNotEmpty(uriAsString,
 			SOURCE_MM_IS_EMPTY, 
 			MttfPackage.Literals.SOURCE_META_MODEL__URI, 
 			MSG_SOURCE_MM_IS_EMTPY
-		);
-		checkValidFile(uriAsString,
+		)) {
+			return;
+		}
+		checkValidMetamodel(uriAsString,
 			SOURCE_MM_IS_INVALID,
 			MttfPackage.Literals.SOURCE_META_MODEL__URI, 
 			MSG_SOURCE_MM_IS_INVALID
@@ -68,22 +80,36 @@ class MttfValidator extends AbstractMttfValidator {
 	@Check
 	def checkTargetMetamodelIsAValidFile(TargetMetaModel targetMetaModel) {
 		val uriAsString = targetMetaModel.uri;
-		checkNotEmpty(uriAsString,
+		if (!checkNotEmpty(uriAsString,
 			TARGET_MM_IS_EMPTY, 
 			MttfPackage.Literals.TARGET_META_MODEL__URI, 
 			MSG_TARGET_MM_IS_EMTPY
-		);
+		)) {
+			return;
+		}
+		checkValidMetamodel(uriAsString,
+			TARGET_MM_IS_INVALID,
+			MttfPackage.Literals.TARGET_META_MODEL__URI, 
+			MSG_TARGET_MM_IS_INVALID
+		)
 	}
 	
 	@Check
 	def checkTransformationIsAValidFile(TransformationUnderTest transformation) {
 		val uriAsString = transformation.uri;
-		checkNotEmpty(uriAsString,
+		if (!checkNotEmpty(uriAsString,
 			TRAFO_IS_EMPTY, 
 			MttfPackage.Literals.TRANSFORMATION_UNDER_TEST__URI, 
 			MSG_TRAFO_IS_EMTPY
-		);
-		
+		)) {
+			return;
+		}
+		val isValid = TransformationRegistry.isValidTransformation(uriAsString);
+		if (!isValid) {
+			error(MSG_TRAFO_IS_INVALID, MttfPackage.Literals.TRANSFORMATION_UNDER_TEST__URI,
+				TRAFO_IS_INVALID
+			);
+		}
 	}
 	
 }

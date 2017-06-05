@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.compiler.codegen.inlineJsrBytecode=enabled
+org.eclipse.jdt.compiler.codegen.targetPlatform=1.8
+org.eclipse.jdt.compiler.compliance=1.8
+org.eclipse.jdt.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.compiler.source=1.8

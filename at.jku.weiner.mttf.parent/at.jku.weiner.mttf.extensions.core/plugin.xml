@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="at.jku.weiner.mttf.extensionpoints.ITransformation">
+      <client
+            class="at.jku.weiner.mttf.extensions.core.ATLTransformation">
+      </client>
+   </extension>
+
+</plugin>

@@ -15,6 +15,8 @@
 	</properties>
 	<modules>
 		<module>at.jku.weiner.mttf</module>
+		<module>at.jku.weiner.mttf.extensionpoints</module>
+		<module>at.jku.weiner.mttf.extensions.core</module>
 		<module>at.jku.weiner.mttf.ide</module>
 		<module>at.jku.weiner.mttf.ui</module>
 		<module>at.jku.weiner.mttf.target</module>

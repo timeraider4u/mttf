@@ -14,6 +14,11 @@ import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import at.jku.weiner.mttf.validation.MttfValidator
 import at.jku.weiner.mttf.mttf.MttfPackage
+import org.junit.Before
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Plugin
+import org.eclipse.core.runtime.NullProgressMonitor
 
 @RunWith(XtextRunner)
 @InjectWith(MttfInjectorProvider)
@@ -23,14 +28,45 @@ class MttfParsingTest{
 	ParseHelper<TestSuite> parseHelper
 	@Inject 
 	ValidationTestHelper validationHelper
+	
+	@Before
+	def void setUp() {
+		System.out.println("void setUp()");
+//		val plugin = ResourcesPlugin.getPlugin();
+//		val bundle = plugin.getBundle();
+
+
+//		val root = ResourcesPlugin.getWorkspace().getRoot();
+//		val projects = root.getProjects();
+//		System.out.println("projects='" + projects + "'");
+//		System.out.println("projects.length='" + projects.length + "'");
+//		for (project : projects) {
+//			val name = project.getName();
+//			val path = project.getProjectRelativePath();
+//			System.out.println("found project='" + name 
+//				+ "' with path='" + path + "'"
+//			);
+//		}
+		
+		
+//		val bundleName = bundle.getSymbolicName();
+//		System.out.println("bundleName='" + bundleName + "'");
+//		val project = root.getProject(bundleName);
+//		if (project.exists()) {
+//			project.delete(true, true, new NullProgressMonitor());
+//		}
+//		project.create(new NullProgressMonitor());
+//		project.open(new NullProgressMonitor());
+	}
 
 	@Test 
 	def void testSimpleTestSuite() {
+		System.out.println("testSimpleTestSuite-begin");
 		val result = parseHelper.parse('''
 			test-suite
 				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
 				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
-				transformation="workspace:/Test/Class2Relational.atl"
+				transformation="platform:/plugin/at.jku.weiner.mttf.tests/transformations/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
 		validationHelper.assertNoErrors(result)
@@ -45,9 +81,10 @@ class MttfParsingTest{
 		Assert.assertEquals("platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi", targetMM.uri);
 		val trafo = sut.transformationUnderTest
 		Assert.assertNotNull(trafo)
-		Assert.assertEquals("workspace:/Test/Class2Relational.atl", trafo.uri);
+		Assert.assertEquals("platform:/plugin/at.jku.weiner.mttf.tests/transformations/Class2Relational.atl", trafo.uri);
 		Assert.assertNotNull(result.testCases)
 		Assert.assertTrue(result.testCases.isEmpty())
+		System.out.println("testSimpleTestSuite-end");
 	}
 	
 	@Test
@@ -56,7 +93,7 @@ class MttfParsingTest{
 			test-suite name=Class2Relational_TestSuite
 				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
 				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
-				transformation="workspace:/Test/Class2Relational.atl"
+				transformation="platform:/plugin/at.jku.weiner.mttf.tests/transformations/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
 		validationHelper.assertNoErrors(result)
@@ -69,7 +106,7 @@ class MttfParsingTest{
 			test-suite name=Class2Relational_TestSuite
 				source-metamodel=""
 				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.ecore"
-				transformation="workspace:/Test/Class2Relational.atl"
+				transformation="platform:/plugin/at.jku.weiner.mttf.tests/transformations/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
 		validationHelper.assertError(result, MttfPackage::eINSTANCE.sourceMetaModel, 
@@ -83,7 +120,7 @@ class MttfParsingTest{
 			test-suite name=Class2Relational_TestSuite
 				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.ecore"
 				target-metamodel=""
-				transformation="workspace:/Test/Class2Relational.atl"
+				transformation="platform:/plugin/at.jku.weiner.mttf.tests/transformations/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
 		validationHelper.assertError(result, MttfPackage::eINSTANCE.targetMetaModel, 
