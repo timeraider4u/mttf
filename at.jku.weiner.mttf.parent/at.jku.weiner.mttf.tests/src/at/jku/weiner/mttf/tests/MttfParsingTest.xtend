@@ -14,11 +14,7 @@ import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import at.jku.weiner.mttf.validation.MttfValidator
 import at.jku.weiner.mttf.mttf.MttfPackage
-import org.junit.Before
-import org.eclipse.core.resources.IProject
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.Plugin
-import org.eclipse.core.runtime.NullProgressMonitor
+import at.jku.weiner.mttf.utils.EclipseUtilities
 
 @RunWith(XtextRunner)
 @InjectWith(MttfInjectorProvider)
@@ -28,36 +24,6 @@ class MttfParsingTest{
 	ParseHelper<TestSuite> parseHelper
 	@Inject 
 	ValidationTestHelper validationHelper
-	
-	@Before
-	def void setUp() {
-		System.out.println("void setUp()");
-//		val plugin = ResourcesPlugin.getPlugin();
-//		val bundle = plugin.getBundle();
-
-
-//		val root = ResourcesPlugin.getWorkspace().getRoot();
-//		val projects = root.getProjects();
-//		System.out.println("projects='" + projects + "'");
-//		System.out.println("projects.length='" + projects.length + "'");
-//		for (project : projects) {
-//			val name = project.getName();
-//			val path = project.getProjectRelativePath();
-//			System.out.println("found project='" + name 
-//				+ "' with path='" + path + "'"
-//			);
-//		}
-		
-		
-//		val bundleName = bundle.getSymbolicName();
-//		System.out.println("bundleName='" + bundleName + "'");
-//		val project = root.getProject(bundleName);
-//		if (project.exists()) {
-//			project.delete(true, true, new NullProgressMonitor());
-//		}
-//		project.create(new NullProgressMonitor());
-//		project.open(new NullProgressMonitor());
-	}
 
 	@Test 
 	def void testSimpleTestSuite() {
@@ -98,6 +64,25 @@ class MttfParsingTest{
 		Assert.assertNotNull(result)
 		validationHelper.assertNoErrors(result)
 		Assert.assertEquals("Class2Relational_TestSuite", result.name)
+	}
+	
+	@Test
+	def void testSimpleTestSuiteWithCopyingPluginToResource() {
+		//copy files
+		val src = "platform:/plugin/at.jku.weiner.mttf.tests";
+		val dst = "platform:/resource/my-test";
+		val project = EclipseUtilities.copyProject(src, dst);
+		Assert.assertNotNull(project);
+		Assert.assertTrue(project.exists());
+		// ...
+		val result = parseHelper.parse('''
+			test-suite name=Class2Relational_TestSuite
+				source-metamodel="platform:/resource/my-test/metamodels/Class.xmi"
+				target-metamodel="platform:/resource/my-test/metamodels/Relational.xmi"
+				transformation="platform:/resource/my-test/transformations/Class2Relational.atl"
+		''')
+		Assert.assertNotNull(result)
+		validationHelper.assertNoErrors(result)
 	}
 	
 	@Test
