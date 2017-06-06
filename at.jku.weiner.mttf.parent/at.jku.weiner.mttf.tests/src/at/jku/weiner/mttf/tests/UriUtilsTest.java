@@ -12,7 +12,7 @@ import at.jku.weiner.mttf.utils.EclipseUtilities;
 import at.jku.weiner.mttf.utils.UriUtils;
 
 public class UriUtilsTest {
-
+	
 	@Test
 	public void testFileForLinuxFilePath() {
 		final String uriAsString = "file:///tmp/myfile.txt";
@@ -20,7 +20,7 @@ public class UriUtilsTest {
 		final String actual = actualFile.getAbsolutePath();
 		Assert.assertEquals("/tmp/myfile.txt", actual);
 	}
-
+	
 	@Test
 	@Ignore
 	public void testFileForWindowsFilePath() {
@@ -30,7 +30,7 @@ public class UriUtilsTest {
 		Assert.assertEquals(File.separator + "C:" + File.separator + "Temp"
 				+ File.separator + "myfile.txt", actual);
 	}
-
+	
 	@Test
 	public void testFileForPluginFile() {
 		final String uriAsString = "platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi";
@@ -39,7 +39,7 @@ public class UriUtilsTest {
 		Assert.assertTrue(actualFile.exists());
 		Assert.assertTrue(actualFile.canRead());
 	}
-
+	
 	@Test
 	@Ignore
 	public void testFileForPluginFileNested() {
@@ -49,7 +49,7 @@ public class UriUtilsTest {
 		Assert.assertTrue(actualFile.exists());
 		Assert.assertTrue(actualFile.canRead());
 	}
-	
+
 	@Test
 	public void testFileForNonExistingPluginFile() {
 		final String uriAsString = "platform:/plugin/NON-EXISTING/UNKNOWN/NON_EXISTING";
@@ -58,7 +58,7 @@ public class UriUtilsTest {
 		Assert.assertFalse(actualFile.exists());
 		Assert.assertFalse(actualFile.canRead());
 	}
-
+	
 	@Test(timeout = 10000)
 	public void testFileForCopyingProject() {
 		final String src = "platform:/plugin/at.jku.weiner.mttf.tests";
@@ -88,6 +88,7 @@ public class UriUtilsTest {
 		Assert.assertTrue(classMM.canRead());
 		final String absString = classMM.getAbsolutePath();
 		Assert.assertEquals(absString, osString);
+		EclipseUtilities.closeProject(dstProject);
 	}
-	
+
 }

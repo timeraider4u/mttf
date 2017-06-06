@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
@@ -54,6 +55,14 @@ public class EclipseUtilities {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static void closeProject(final IProject project) {
+		try {
+			project.close(EclipseUtilities.getProgressMonitor());
+		} catch (final CoreException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }
