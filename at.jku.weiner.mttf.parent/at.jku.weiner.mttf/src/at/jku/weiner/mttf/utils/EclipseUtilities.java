@@ -13,21 +13,21 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 
 public class EclipseUtilities {
-
-	private EclipseUtilities() {
-
-	}
 	
+	private EclipseUtilities() {
+		
+	}
+
 	public static IWorkspaceRoot getWorkspaceRoot() {
 		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		final IWorkspaceRoot root = workspace.getRoot();
 		return root;
 	}
-	
+
 	public static IProgressMonitor getProgressMonitor() {
 		return new NullProgressMonitor();
 	}
-
+	
 	public static IProject copyProject(final String srcUriAsString,
 			final String dstUriAsString) {
 		try {
@@ -41,6 +41,7 @@ public class EclipseUtilities {
 			if (dstProject.exists()) {
 				dstProject.delete(true, EclipseUtilities.getProgressMonitor());
 			}
+			Thread.sleep(100);
 			dstProject.create(EclipseUtilities.getProgressMonitor());
 			dstProject.open(EclipseUtilities.getProgressMonitor());
 			dstProject.refreshLocal(IResource.DEPTH_INFINITE,
@@ -54,5 +55,5 @@ public class EclipseUtilities {
 		}
 		return null;
 	}
-	
+
 }

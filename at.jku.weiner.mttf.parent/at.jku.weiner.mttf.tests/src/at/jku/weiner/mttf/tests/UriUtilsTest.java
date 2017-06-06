@@ -59,7 +59,7 @@ public class UriUtilsTest {
 		Assert.assertFalse(actualFile.canRead());
 	}
 
-	@Test
+	@Test(timeout = 10000)
 	public void testFileForCopyingProject() {
 		final String src = "platform:/plugin/at.jku.weiner.mttf.tests";
 		final String dst = "platform:/resource/my-test";
