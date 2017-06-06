@@ -136,6 +136,7 @@
 		</pluginManagement>
 	</build>
 
+	<!--
 	<dependencies>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -143,4 +144,5 @@
 			<version>2.5</version>
 		</dependency>
 	</dependencies>
+	-->
 </project>
