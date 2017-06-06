@@ -7,10 +7,8 @@ import at.jku.weiner.mttf.mttf.MttfPackage
 import at.jku.weiner.mttf.mttf.SourceMetaModel
 import at.jku.weiner.mttf.mttf.TransformationUnderTest
 import at.jku.weiner.mttf.mttf.TargetMetaModel
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.validation.Check
-import java.util.HashMap
 import java.io.IOException
 import at.jku.weiner.mttf.utils.ResourceSetUtils
 import at.jku.weiner.mttf.extensionpoints.TransformationRegistry
