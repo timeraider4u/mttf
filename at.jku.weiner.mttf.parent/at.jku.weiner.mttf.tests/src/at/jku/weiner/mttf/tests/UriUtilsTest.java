@@ -66,7 +66,8 @@ public class UriUtilsTest {
 		final File srcDir = UriUtils.getFileFor(src);
 		final File dstDir = UriUtils.getFileFor(dst);
 		// copy files
-		final IProject dstProject = EclipseUtilities.copyProject(src, dst);
+		final IProject dstProject = EclipseUtilities.copyProject(src, dst,
+				true);
 		Assert.assertNotNull(dstProject);
 		Assert.assertTrue(dstProject.exists());
 		Assert.assertTrue(dstProject.isOpen());

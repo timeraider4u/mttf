@@ -4,10 +4,14 @@
 package at.jku.weiner.mttf.generator
 
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import at.jku.weiner.mttf.mttf.TestSuite
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.resources.IProject
+import at.jku.weiner.mttf.utils.EclipseUtilities
 
 /**
  * Generates code from your model files on save.
@@ -15,14 +19,50 @@ import at.jku.weiner.mttf.mttf.TestSuite
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class MttfGenerator extends AbstractGenerator {
+	
+	@Accessors
+	IProject project = null;
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		val suite = resource.getContents().filter(typeof(TestSuite));
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
+		//if (project != null) {
+		setOutputConfiguration(resource, fsa);
+		//}
+		val suite = resource.getContents().filter(typeof(TestSuite)).head;
+		val sut = suite.sut
+		val srcMMUri = sut.sourceMetaModel.uri
+		val dstMMUri = sut.targetMetaModel.uri
+		val transformationUri = sut.transformationUnderTest.uri
+		val combinedMMName = getTransformationNameFrom(transformationUri);
+		val combinedMMContent = getCombinedMMContent(srcMMUri, dstMMUri);
+		System.out.println("combinedMMName='" + combinedMMName + "'");
+		System.out.println("combinedMMContent='" + combinedMMContent + "'");
+		fsa.generateFile('metamodels/' + combinedMMName, combinedMMContent);
+	}
+	
+	def void setOutputConfiguration(Resource resource, IFileSystemAccess2 fsa) {
+		if (!(fsa instanceof EclipseResourceFileSystemAccess2)) {
+			return;
+		}
+		val fsa2 = fsa as EclipseResourceFileSystemAccess2;
+		val genFolder = project.getFolder("mttf-gen");
+		if (!genFolder.exists()) {
+			genFolder.create(true, true,
+				EclipseUtilities.getProgressMonitor());
+		}
+		val fullPath = genFolder.getFullPath();
+		val path = fullPath.toString();
+		fsa2.setOutputPath(path);
+	}
+	
+	def String getTransformationNameFrom(String transformation) {
+		val index = transformation.lastIndexOf("/");
+		val result = transformation.substring(index + 1) + ".xmi";
+		return result
+	}
+	
+	def String getCombinedMMContent(String srcMMUri, String dstMMUri) {
+		val result = '';
+		return result;
 	}
 	
 }

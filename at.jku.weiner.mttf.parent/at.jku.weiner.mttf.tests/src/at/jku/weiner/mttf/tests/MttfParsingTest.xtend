@@ -71,7 +71,7 @@ class MttfParsingTest{
 		//copy files
 		val src = "platform:/plugin/at.jku.weiner.mttf.tests";
 		val dst = "platform:/resource/my-test";
-		val project = EclipseUtilities.copyProject(src, dst);
+		val project = EclipseUtilities.copyProject(src, dst, true);
 		Assert.assertNotNull(project);
 		Assert.assertTrue(project.exists());
 		// ...
@@ -90,7 +90,7 @@ class MttfParsingTest{
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
 				source-metamodel=""
-				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.ecore"
+				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
 				transformation="platform:/plugin/at.jku.weiner.mttf.tests/transformations/Class2Relational.atl"
 		''')
 		Assert.assertNotNull(result)
@@ -103,7 +103,7 @@ class MttfParsingTest{
 	def void testSimpleTestSuiteWithEmptyTargetMM() {
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
-				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.ecore"
+				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
 				target-metamodel=""
 				transformation="platform:/plugin/at.jku.weiner.mttf.tests/transformations/Class2Relational.atl"
 		''')
@@ -117,8 +117,8 @@ class MttfParsingTest{
 	def void testSimpleTestSuiteWithEmptyTrafo() {
 		val result = parseHelper.parse('''
 			test-suite name=Class2Relational_TestSuite
-				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.ecore"
-				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.ecore"
+				source-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Class.xmi"
+				target-metamodel="platform:/plugin/at.jku.weiner.mttf.tests/metamodels/Relational.xmi"
 				transformation=""
 		''')
 		Assert.assertNotNull(result)
