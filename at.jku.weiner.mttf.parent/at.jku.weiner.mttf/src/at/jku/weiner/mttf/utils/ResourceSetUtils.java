@@ -7,6 +7,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 //import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
@@ -40,35 +41,39 @@ public final class ResourceSetUtils {
 	@Inject
 	private Provider<XtextResourceSet> resourceSetProvider;
 
-	public ResourceSet getResourceSetForURI(final URI uri) {
-		// return new ResourceSetImpl();
+	public ResourceSet getXtextResourceSetForURI(final URI uri) {
 		final XtextResourceSet result = this.resourceSetProvider.get();
 		return result;
+	}
+	
+	public ResourceSet getResourceSetForURI(final URI uri) {
+		return new ResourceSetImpl();
 	}
 	
 	public Map<Object, Object> getLoadOptionsForURI(final URI uri) {
 		return new HashMap<Object, Object>();
 	}
 
-	public boolean loadResource(final String uriAsString) {
+	public Resource loadResource(final String uriAsString) {
 		try {
-			this.loadResourceWithoutHandling(uriAsString);
-			return true;
-		} catch (final Exception ex) {
+			final Resource result = this
+					.loadResourceWithoutHandling(uriAsString);
+			return result;
+		} catch (final IOException ex) {
 			ex.printStackTrace();
 		}
-		return false;
+		return null;
 	}
 
-	public void loadResourceWithoutHandling(final String uriAsString)
+	public Resource loadResourceWithoutHandling(final String uriAsString)
 			throws IOException {
 		final URI uri = URI.createURI(uriAsString);
-		final ResourceSet resourceSet = ResourceSetUtils.getInstance()
-				.getResourceSetForURI(uri);
+		final ResourceSet resourceSet = this.getResourceSetForURI(uri);
 		final Resource resource = resourceSet.getResource(uri, true);
 
 		final Map<Object, Object> options = new HashMap<Object, Object>();
 		resource.load(options);
+		return resource;
 	}
 	
 }
