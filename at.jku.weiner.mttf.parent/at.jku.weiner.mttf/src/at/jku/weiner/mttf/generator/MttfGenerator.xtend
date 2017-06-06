@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import at.jku.weiner.mttf.mttf.TestSuite
 
 /**
  * Generates code from your model files on save.
@@ -16,10 +17,12 @@ import org.eclipse.xtext.generator.IGeneratorContext
 class MttfGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		val suite = resource.getContents().filter(typeof(TestSuite));
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
 //			resource.allContents
 //				.filter(typeof(Greeting))
 //				.map[name]
 //				.join(', '))
 	}
+	
 }
