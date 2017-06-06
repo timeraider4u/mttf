@@ -14,6 +14,7 @@ import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+// TODO: remove System.out.println(...) statements
 public class UriUtils {
 	
 	public static File getFileFor(final IFile iFile) {
@@ -52,6 +53,7 @@ public class UriUtils {
 	private static File getFileForPluginURI(final String uriAsString,
 			final URI uri) throws Exception, IOException {
 		
+		// TODO: clean-up this mess!
 		// final Bundle bundle = FrameworkUtil.getBundle(UriUtils.class);
 		// final String bundleName = bundle.getSymbolicName();
 		// System.out.println("bundleName='" + bundleName + "'");
