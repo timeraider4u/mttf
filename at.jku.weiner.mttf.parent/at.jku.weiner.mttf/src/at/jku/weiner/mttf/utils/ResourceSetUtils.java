@@ -4,59 +4,33 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-//import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.xtext.resource.XtextResourceSet;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 /***
  * Trying to centralize code for loading resources from a ResourceSet.
  * <br/>
- * <br/>
- * Singleton object
  *
  * @author Harald Weiner
- *
  */
 public final class ResourceSetUtils {
-	
-	private static ResourceSetUtils instance = null;
-	
-	private ResourceSetUtils() {
-		
-	}
-	
-	public static ResourceSetUtils getInstance() {
-		if (ResourceSetUtils.instance == null) {
-			ResourceSetUtils.instance = new ResourceSetUtils();
-		}
-		return ResourceSetUtils.instance;
-	}
-	
-	@Inject
-	private Provider<XtextResourceSet> resourceSetProvider;
 
-	public ResourceSet getXtextResourceSetForURI(final URI uri) {
-		final XtextResourceSet result = this.resourceSetProvider.get();
-		return result;
+	private ResourceSetUtils() {
+
 	}
-	
-	public ResourceSet getResourceSetForURI(final URI uri) {
+
+	public static ResourceSet getResourceSetForURI(final URI uri) {
 		return new ResourceSetImpl();
 	}
 	
-	public Map<Object, Object> getLoadOptionsForURI(final URI uri) {
-		return new HashMap<Object, Object>();
-	}
-
-	public Resource loadResource(final String uriAsString) {
+	public static Resource loadResource(final String uriAsString) {
 		try {
-			final Resource result = this
+			final Resource result = ResourceSetUtils
 					.loadResourceWithoutHandling(uriAsString);
 			return result;
 		} catch (final IOException ex) {
@@ -64,16 +38,41 @@ public final class ResourceSetUtils {
 		}
 		return null;
 	}
-
-	public Resource loadResourceWithoutHandling(final String uriAsString)
+	
+	public static Resource loadResourceWithoutHandling(final String uriAsString)
 			throws IOException {
 		final URI uri = URI.createURI(uriAsString);
-		final ResourceSet resourceSet = this.getResourceSetForURI(uri);
+		final ResourceSet resourceSet = ResourceSetUtils
+				.getResourceSetForURI(uri);
 		final Resource resource = resourceSet.getResource(uri, true);
-
-		final Map<Object, Object> options = new HashMap<Object, Object>();
+		
+		final Map<Object, Object> options = ResourceSetUtils
+				.getLoadOptionsForURI(uri);
 		resource.load(options);
 		return resource;
 	}
 	
+	private static Map<Object, Object> getLoadOptionsForURI(final URI uri) {
+		return new HashMap<Object, Object>();
+	}
+
+	/***
+	 * see also
+	 * http://blog.eclipse-tips.com/2008/03/converting-emf-resource-to-platform.html
+	 */
+	public static IFile getIFileForResource(final Resource resource) {
+		final URI uri = resource.getURI();
+		System.out.println("getIFileForResource-uri='" + uri + "'");
+		if (!uri.isPlatformResource()) {
+			return null;
+		}
+		final String platformString = uri.toPlatformString(true);
+		System.out.println(
+				"getIFileForResource-platformString='" + platformString + "'");
+		final IWorkspaceRoot root = EclipseUtilities.getWorkspaceRoot();
+		final Path path = new Path(platformString);
+		final IFile result = root.getFile(path);
+		return result;
+	}
+
 }

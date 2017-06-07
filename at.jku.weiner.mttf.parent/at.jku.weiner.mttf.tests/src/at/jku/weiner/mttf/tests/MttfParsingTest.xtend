@@ -15,6 +15,7 @@ import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import at.jku.weiner.mttf.validation.MttfValidator
 import at.jku.weiner.mttf.mttf.MttfPackage
 import at.jku.weiner.mttf.utils.EclipseUtilities
+import at.jku.weiner.mttf.utils.ResourceSetUtils
 
 @RunWith(XtextRunner)
 @InjectWith(MttfInjectorProvider)
@@ -66,7 +67,7 @@ class MttfParsingTest{
 		Assert.assertEquals("Class2Relational_TestSuite", result.name)
 	}
 	
-	@Test
+	@Test(timeout = 10000)
 	def void testSimpleTestSuiteWithCopyingPluginToResource() {
 		//copy files
 		val src = "platform:/plugin/at.jku.weiner.mttf.tests";
@@ -81,6 +82,22 @@ class MttfParsingTest{
 				target-metamodel="platform:/resource/my-test/metamodels/Relational.xmi"
 				transformation="platform:/resource/my-test/transformations/Class2Relational.atl"
 		''')
+		Assert.assertNotNull(result)
+		validationHelper.assertNoErrors(result)
+	}
+	
+	@Test(timeout = 10000)
+	def void testSimpleTestSuiteWithCopyingPluginToResourceAndParsingFromFile() {
+		//copy files
+		val src = "platform:/plugin/at.jku.weiner.mttf.tests";
+		val dst = "platform:/resource/my-test";
+		val project = EclipseUtilities.copyProject(src, dst, true);
+		Assert.assertNotNull(project);
+		Assert.assertTrue(project.exists());
+		// ...
+		val uriAsString = "platform:/resource/my-test/res/TestGeneratingCombinedMetaModelWithCopyingPluginToResource.mttf";
+		val resource = ResourceSetUtils.loadResourceWithoutHandling(uriAsString);
+		val result = resource.allContents.head
 		Assert.assertNotNull(result)
 		validationHelper.assertNoErrors(result)
 	}

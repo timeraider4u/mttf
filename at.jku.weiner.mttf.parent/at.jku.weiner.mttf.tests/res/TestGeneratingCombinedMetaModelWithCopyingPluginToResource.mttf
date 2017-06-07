@@ -1,0 +1,4 @@
+test-suite
+	source-metamodel="platform:/resource/my-test/metamodels/Class.xmi"
+	target-metamodel="platform:/resource/my-test/metamodels/Relational.xmi"
+	transformation="platform:/resource/my-test/transformations/Class2Relational.atl"

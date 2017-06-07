@@ -9,9 +9,9 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import at.jku.weiner.mttf.mttf.TestSuite
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.core.resources.IProject
 import at.jku.weiner.mttf.utils.EclipseUtilities
+import org.eclipse.xtext.generator.OutputConfiguration
+import java.io.ByteArrayInputStream
 
 /**
  * Generates code from your model files on save.
@@ -20,38 +20,54 @@ import at.jku.weiner.mttf.utils.EclipseUtilities
  */
 class MttfGenerator extends AbstractGenerator {
 	
-	@Accessors
-	IProject project = null;
+	public static final String MTTF_GEN_CONFIG_ID = MttfGenerator.package.name;
+	public static final String MTTF_GEN_OUTPUT = "./mttf-gen";
+	public static final String ENCODING = "UTF-8";
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		//if (project != null) {
-		setOutputConfiguration(resource, fsa);
-		//}
+		setUpFileSystemConfiguration(resource, fsa);
 		val suite = resource.getContents().filter(typeof(TestSuite)).head;
 		val sut = suite.sut
 		val srcMMUri = sut.sourceMetaModel.uri
 		val dstMMUri = sut.targetMetaModel.uri
 		val transformationUri = sut.transformationUnderTest.uri
-		val combinedMMName = getTransformationNameFrom(transformationUri);
-		val combinedMMContent = getCombinedMMContent(srcMMUri, dstMMUri);
-		System.out.println("combinedMMName='" + combinedMMName + "'");
-		System.out.println("combinedMMContent='" + combinedMMContent + "'");
-		fsa.generateFile('metamodels/' + combinedMMName, combinedMMContent);
+		generateCombinedMetamodel(resource, fsa, srcMMUri, dstMMUri, transformationUri);
 	}
 	
-	def void setOutputConfiguration(Resource resource, IFileSystemAccess2 fsa) {
+	def void setUpFileSystemConfiguration(Resource resource, IFileSystemAccess2 fsa) {
 		if (!(fsa instanceof EclipseResourceFileSystemAccess2)) {
 			return;
 		}
 		val fsa2 = fsa as EclipseResourceFileSystemAccess2;
-		val genFolder = project.getFolder("mttf-gen");
-		if (!genFolder.exists()) {
-			genFolder.create(true, true,
-				EclipseUtilities.getProgressMonitor());
-		}
-		val fullPath = genFolder.getFullPath();
-		val path = fullPath.toString();
-		fsa2.setOutputPath(path);
+		fsa2.setMonitor(EclipseUtilities.getProgressMonitor());
+		val project = EclipseUtilities.getProjectFor(resource);
+		fsa2.setProject(project);
+		val outputs = fsa2.getOutputConfigurations();
+		val outputConfig = createOutputConfiguration();
+		outputs.put(MTTF_GEN_CONFIG_ID, outputConfig);
+		fsa2.setOutputConfigurations(outputs);
+	}
+	
+	def OutputConfiguration createOutputConfiguration() {
+		val outputConfig = new OutputConfiguration(MTTF_GEN_CONFIG_ID);
+		outputConfig.setCanClearOutputDirectory(true);
+		outputConfig.setCleanUpDerivedResources(true);
+		outputConfig.setCreateOutputDirectory(true);
+		outputConfig.setDescription("mttf output folder");
+		outputConfig.setOutputDirectory(MTTF_GEN_OUTPUT);
+		outputConfig.setOverrideExistingResources(true);
+		outputConfig.setSetDerivedProperty(true);
+		return outputConfig;
+	}
+	
+	def void generateCombinedMetamodel(Resource resource, IFileSystemAccess2 fsa, 
+		String srcMMUri, String dstMMUri, String transformationUri) {
+		val combinedMMName = "/metamodels/" + getTransformationNameFrom(transformationUri);
+		val combinedMMContent = getCombinedMMContent(srcMMUri, dstMMUri);
+		System.out.println("combinedMMName='" + combinedMMName + "'");
+		System.out.println("combinedMMContent='" + combinedMMContent + "'");
+		val content = new ByteArrayInputStream(combinedMMContent.getBytes(ENCODING));
+		fsa.generateFile(combinedMMName, MTTF_GEN_CONFIG_ID, content);
 	}
 	
 	def String getTransformationNameFrom(String transformation) {
@@ -61,7 +77,7 @@ class MttfGenerator extends AbstractGenerator {
 	}
 	
 	def String getCombinedMMContent(String srcMMUri, String dstMMUri) {
-		val result = '';
+		val result = 'abc';
 		return result;
 	}
 	

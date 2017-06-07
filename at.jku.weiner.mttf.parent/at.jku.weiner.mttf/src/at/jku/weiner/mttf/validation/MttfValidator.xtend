@@ -44,7 +44,7 @@ class MttfValidator extends AbstractMttfValidator {
 	
 	def checkValidMetamodel(String uriAsString, String id, EStructuralFeature feature, String msg) {
 		try {
-			ResourceSetUtils.getInstance().loadResourceWithoutHandling(uriAsString);
+			ResourceSetUtils.loadResourceWithoutHandling(uriAsString);
 		}
 		catch (IOException ex) {
 			val errorMsg = msg + "'" + uriAsString + "' ('" + ex.getMessage() + "')!";

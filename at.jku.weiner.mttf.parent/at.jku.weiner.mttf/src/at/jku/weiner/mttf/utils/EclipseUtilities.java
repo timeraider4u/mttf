@@ -4,6 +4,8 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
@@ -14,6 +16,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 
 public class EclipseUtilities {
 	
@@ -51,12 +54,11 @@ public class EclipseUtilities {
 					EclipseUtilities.getProgressMonitor());
 			FileUtils.copyDirectory(srcDir, dstDir);
 			if (removeBuilders) {
-				EclipseUtilities.printBuilders(dstProject, "before-");
 				EclipseUtilities.removeBuilders(dstProject);
 			}
 			dstProject.refreshLocal(IResource.DEPTH_INFINITE,
 					EclipseUtilities.getProgressMonitor());
-			EclipseUtilities.printBuilders(dstProject, "after");
+			EclipseUtilities.printBuilders(dstProject, "after-final-refresh");
 			return dstProject;
 		} catch (final Exception ex) {
 			ex.printStackTrace();
@@ -66,8 +68,10 @@ public class EclipseUtilities {
 	
 	private static void removeBuilders(final IProject project)
 			throws CoreException {
-		project.refreshLocal(IResource.DEPTH_ZERO,
+		EclipseUtilities.printBuilders(project, "before-first-refresh");
+		project.refreshLocal(IResource.DEPTH_ONE,
 				EclipseUtilities.getProgressMonitor());
+		EclipseUtilities.printBuilders(project, "before-remove");
 		final IProjectDescription description = project.getDescription();
 		final ICommand[] newCommands = new ICommand[] {};
 		description.setBuildSpec(newCommands);
@@ -76,6 +80,7 @@ public class EclipseUtilities {
 	
 	private static void printBuilders(final IProject project,
 			final String prefix) throws CoreException {
+		System.out.println("printBuildersFor='" + prefix + "'");
 		final IProjectDescription description = project.getDescription();
 		final ICommand[] command = description.getBuildSpec();
 		for (int i = 0; i < command.length; i++) {
@@ -89,6 +94,28 @@ public class EclipseUtilities {
 		} catch (final CoreException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public static IProject getProjectFor(final Resource resource) {
+		final IFile iFile = ResourceSetUtils.getIFileForResource(resource);
+		final IProject project = iFile.getProject();
+		return project;
+	}
+
+	public static IFolder createOutputFolderFor(final Resource resource,
+			final String genFolderPath) {
+		final IProject project = EclipseUtilities.getProjectFor(resource);
+		final IFolder genFolder = project.getFolder(genFolderPath);
+		if (!genFolder.exists()) {
+			try {
+				genFolder.create(true, true,
+						EclipseUtilities.getProgressMonitor());
+			} catch (final CoreException ex) {
+				ex.printStackTrace();
+				return null;
+			}
+		}
+		return genFolder;
 	}
 
 }

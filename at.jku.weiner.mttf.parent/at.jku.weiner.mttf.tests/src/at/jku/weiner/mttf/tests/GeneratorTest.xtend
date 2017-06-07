@@ -13,8 +13,9 @@ import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import at.jku.weiner.mttf.utils.EclipseUtilities
-import at.jku.weiner.mttf.generator.MttfGenerator
 import org.eclipse.xtext.generator.IGenerator2
+import at.jku.weiner.mttf.utils.ResourceSetUtils
+import at.jku.weiner.mttf.generator.MttfGenerator
 
 @RunWith(XtextRunner)
 @InjectWith(MttfInjectorProvider)
@@ -38,15 +39,9 @@ class GeneratorTest {
 		validationHelper.assertNoErrors(model)
 		val fsa = new InMemoryFileSystemAccess()
 		underTest.doGenerate(model.eResource, fsa, null)
-		// print files
-		val keyset = fsa.getAllFiles().keySet
-		for (var i = 0; i < keyset.size; i++) {
-			val key = keyset.get(i);
-			println("key(" + i + ")='" + key + "'");
-		}
 		// ...
 		Assert.assertEquals(1, fsa.getAllFiles.size)
-		val filename = IFileSystemAccess::DEFAULT_OUTPUT+"metamodels/Class2Relational.atl.xmi"
+		val filename = MttfGenerator.MTTF_GEN_CONFIG_ID+"/metamodels/Class2Relational.atl.xmi"
 		Assert.assertTrue(fsa.getAllFiles.containsKey(filename))
 		val actualFileContent = fsa.getAllFiles.get(filename);
 		val expectedFileContent = 
@@ -59,6 +54,7 @@ class GeneratorTest {
 	}
 	
 	@Test
+	//(timeout = 10000)
 	def testGeneratingCombinedMetaModelWithCopyingPluginToResource() {
 		//copy files
 		val src = "platform:/plugin/at.jku.weiner.mttf.tests/";
@@ -67,21 +63,18 @@ class GeneratorTest {
 		Assert.assertNotNull(project);
 		Assert.assertTrue(project.exists());
 		// ...
-		val model = parseHelper.parse('''
-			test-suite
-				source-metamodel="platform:/resource/my-test/metamodels/Class.xmi"
-				target-metamodel="platform:/resource/my-test/metamodels/Relational.xmi"
-				transformation="platform:/resource/my-test/transformations/Class2Relational.atl"
-		''')
+		val uriAsString = "platform:/resource/my-test/res/TestGeneratingCombinedMetaModelWithCopyingPluginToResource.mttf";
+		val resource = ResourceSetUtils.loadResourceWithoutHandling(uriAsString);
+		val model = resource.allContents.head
 		validationHelper.assertNoErrors(model)
 		val fsa = new EclipseResourceFileSystemAccess2();
-		fsa.setMonitor(EclipseUtilities.getProgressMonitor());
-		//underTest.setProject(project);
 		underTest.doGenerate(model.eResource, fsa, null)
 		// ...
+		val outputConfigurationName = MttfGenerator.MTTF_GEN_CONFIG_ID;
 		val fileName = "metamodels/Class2Relational.atl.xmi";
-		Assert.assertTrue(fsa.isFile(fileName));
-		val actualFileContent = fsa.readTextFile(fileName);
+		val isFile = fsa.isFile(fileName, outputConfigurationName);
+		Assert.assertTrue(isFile);
+		val actualFileContent = fsa.readTextFile(fileName, outputConfigurationName);
 		val expectedFileContent = 
 			'''
             public class Alice {
@@ -89,6 +82,26 @@ class GeneratorTest {
             }
 			''';
 		Assert. assertEquals(expectedFileContent.toString, actualFileContent.toString);
+	}
+	
+	def void printFilesInFileSystem(InMemoryFileSystemAccess fsa) {
+		val keyset = fsa.getAllFiles().keySet
+		for (var i = 0; i < keyset.size; i++) {
+			val key = keyset.get(i);
+			println("key(" + i + ")='" + key + "'");
+		}
+	}
+	
+	def void printOutputs(EclipseResourceFileSystemAccess2 fsa) {
+		val outputs = fsa.getOutputConfigurations();
+		val outputKeys = outputs.keySet;
+		for (var i = 0; i < outputKeys.length(); i++) {
+			val key = outputKeys.get(i);
+			val value = outputs.get(key);
+			val output = value.outputDirectory;
+			val createOut = value.createOutputDirectory;
+			System.out.println("key='" + key + "', output='" + output + "', createOut='" + createOut + "'");
+		}
 	}
 	
 }
